@@ -1,5 +1,5 @@
 package org.acme;
-
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -16,6 +16,7 @@ public class UsersResource {
 
     @POST
     @Path("/add")
+    @RolesAllowed("admin")
     public Response addUser(Users user) {
         Users created = userService.addUser(user);
         return Response.status(Response.Status.CREATED).entity(created).build();

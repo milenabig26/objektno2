@@ -1,7 +1,7 @@
 package org.acme;
 
-import io.quarkus.scheduler.Scheduled; // DODATO
-import org.jboss.logging.Logger;      // DODATO
+import io.quarkus.scheduler.Scheduled; 
+import org.jboss.logging.Logger;      
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
@@ -12,20 +12,17 @@ import java.util.List;
 @ApplicationScoped
 public class UsersService {
 
-    // Inicijalizacija loggera za ispis u konzolu
     private static final Logger LOG = Logger.getLogger(UsersService.class);
 
     @Inject
     EntityManager em;
 
-    // --- NOVO: SCHEDULER ---
-    // Ova metoda se pokreće automatski svakih 30 sekundi
     @Scheduled(every = "30s")
     void automatskiIzvjestaj() {
         List<Users> sviKorisnici = getAllUsers();
         LOG.info(">>> [SCHEDULER] Trenutno stanje u bazi: " + sviKorisnici.size() + " korisnika.");
     }
-    // -----------------------
+  
 
     @Transactional
     public Users addUser(Users user) {

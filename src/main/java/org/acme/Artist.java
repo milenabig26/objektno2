@@ -3,7 +3,7 @@ package org.acme;
 import jakarta.persistence.*;
 import java.util.List;
 import java.util.ArrayList;
-import com.fasterxml.jackson.annotation.JsonIgnore; // Import za sprečavanje rekurzije
+import com.fasterxml.jackson.annotation.JsonIgnore; 
 
 @Entity
 @Table(name = "artists")
@@ -18,17 +18,15 @@ public class Artist {
 
     private String bio;
 
-    // KLJUČNA IZMJENA: @JsonIgnore sprječava beskonačnu petlju (User -> Artist -> User...)
-    // mappedBy mora odgovarati nazivu polja u klasi Users (followedArtists)
+    
     @JsonIgnore
     @ManyToMany(mappedBy = "followedArtists", fetch = FetchType.LAZY)
     private List<Users> followers = new ArrayList<>();
 
-    // Prazan konstruktor
     public Artist() {
     }
 
-    // GETTERI I SETTERI
+
 
     public Long getId() {
         return id;

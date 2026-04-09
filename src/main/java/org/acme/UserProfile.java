@@ -16,14 +16,13 @@ public class UserProfile {
     private String lastName;
     private String bio;
 
-    // Ovdje je bila greška! Mora biti "userProfile" (malo u, ali naziv polja iz Users klase)
     @OneToOne(mappedBy = "userProfile", fetch = FetchType.LAZY)
     @JsonIgnore
     private Users user;
 
     public UserProfile() {}
 
-    // Getteri i Setteri ostaju isti
+   
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     public String getFirstName() { return firstName; }

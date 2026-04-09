@@ -17,7 +17,7 @@ public class UserProfileResource {
     @POST
     @Path("/add")
     public Response addProfile(UserProfile profile) {
-        // Ovde koristimo updateProfile metodu iz servisa koju smo dodali
+       
         UserProfile created = profileService.updateProfile(profile);
         return Response.ok().entity(created).build();
     }
