@@ -3,6 +3,7 @@ package org.acme;
 import jakarta.persistence.*;
 import java.util.List;
 import java.util.ArrayList;
+import com.fasterxml.jackson.annotation.JsonManagedReference; // Dodat import
 
 @Entity
 @Table(name = "app_users") 
@@ -28,7 +29,11 @@ public class Users {
     @JoinColumn(name = "profile_id", referencedColumnName = "id")
     private UserProfile userProfile;
 
-    
+    // IZMJENA: Dodata anotacija da bi JSON ispravno radio
+    @JsonManagedReference
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<TimeResponseRecord> timeRecords = new ArrayList<>();
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name = "user_follows_artist",
@@ -37,10 +42,7 @@ public class Users {
     )
     private List<Artist> followedArtists = new ArrayList<>();
 
-    public Users() {
-    }
-
-  
+    public Users() {}
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
@@ -57,12 +59,9 @@ public class Users {
     public UserProfile getUserProfile() { return userProfile; }
     public void setUserProfile(UserProfile userProfile) { this.userProfile = userProfile; }
 
+    public List<TimeResponseRecord> getTimeRecords() { return timeRecords; }
+    public void setTimeRecords(List<TimeResponseRecord> timeRecords) { this.timeRecords = timeRecords; }
 
-    public List<Artist> getFollowedArtists() {
-        return followedArtists;
-    }
-
-    public void setFollowedArtists(List<Artist> followedArtists) {
-        this.followedArtists = followedArtists;
-    }
+    public List<Artist> getFollowedArtists() { return followedArtists; }
+    public void setFollowedArtists(List<Artist> followedArtists) { this.followedArtists = followedArtists; }
 }
