@@ -3,7 +3,7 @@ package org.acme;
 import jakarta.persistence.*;
 import java.util.List;
 import java.util.ArrayList;
-import com.fasterxml.jackson.annotation.JsonManagedReference; // Dodat import
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "app_users") 
@@ -29,10 +29,9 @@ public class Users {
     @JoinColumn(name = "profile_id", referencedColumnName = "id")
     private UserProfile userProfile;
 
-    // IZMJENA: Dodata anotacija da bi JSON ispravno radio
     @JsonManagedReference
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<TimeResponseRecord> timeRecords = new ArrayList<>();
+    private List<TimeZoneData> timeZoneDataList = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -59,8 +58,8 @@ public class Users {
     public UserProfile getUserProfile() { return userProfile; }
     public void setUserProfile(UserProfile userProfile) { this.userProfile = userProfile; }
 
-    public List<TimeResponseRecord> getTimeRecords() { return timeRecords; }
-    public void setTimeRecords(List<TimeResponseRecord> timeRecords) { this.timeRecords = timeRecords; }
+    public List<TimeZoneData> getTimeZoneDataList() { return timeZoneDataList; }
+    public void setTimeZoneDataList(List<TimeZoneData> timeZoneDataList) { this.timeZoneDataList = timeZoneDataList; }
 
     public List<Artist> getFollowedArtists() { return followedArtists; }
     public void setFollowedArtists(List<Artist> followedArtists) { this.followedArtists = followedArtists; }
