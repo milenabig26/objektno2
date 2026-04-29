@@ -33,6 +33,10 @@ public class Users {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<TimeZoneData> timeZoneDataList = new ArrayList<>();
 
+    @JsonManagedReference
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<CurrencyResponse> currencyResponses = new ArrayList<>();
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name = "user_follows_artist",
@@ -43,6 +47,7 @@ public class Users {
 
     public Users() {}
 
+    
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -60,6 +65,9 @@ public class Users {
 
     public List<TimeZoneData> getTimeZoneDataList() { return timeZoneDataList; }
     public void setTimeZoneDataList(List<TimeZoneData> timeZoneDataList) { this.timeZoneDataList = timeZoneDataList; }
+
+    public List<CurrencyResponse> getCurrencyResponses() { return currencyResponses; }
+    public void setCurrencyResponses(List<CurrencyResponse> currencyResponses) { this.currencyResponses = currencyResponses; }
 
     public List<Artist> getFollowedArtists() { return followedArtists; }
     public void setFollowedArtists(List<Artist> followedArtists) { this.followedArtists = followedArtists; }

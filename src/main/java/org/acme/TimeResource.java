@@ -34,10 +34,8 @@ public class TimeResource {
         }
 
         try {
-            // 1. IP adresa
             String mojIp = ipClient.getMyIp().trim();
-            
-            // 2. Vreme sa fallback-om
+         
             String jsonOdgovor;
             try {
                 jsonOdgovor = timeServiceClient.getTimeByIp(mojIp);
@@ -45,26 +43,21 @@ public class TimeResource {
                 jsonOdgovor = "{\"dateTime\":\"" + java.time.LocalDateTime.now() + "\", \"status\":\"manual\"}";
             }
 
-            // 3. Novi zapis
             TimeZoneData noviZapis = new TimeZoneData();
             noviZapis.setDateTime(jsonOdgovor);
             noviZapis.setTimeZone("Sistem"); 
             noviZapis.setUser(korisnik);
             
-            // 4. Inicijalizacija liste ako je null i dodavanje
             if (korisnik.getTimeZoneDataList() == null) {
                 korisnik.setTimeZoneDataList(new java.util.ArrayList<>());
             }
             korisnik.getTimeZoneDataList().add(noviZapis);
             em.persist(noviZapis);
 
-            // KLJUČNO ZA RJEŠAVANJE GREŠKE:
-            // Moramo "dotaknuti" svaku lazy listu da bi je Hibernate učitao
             if (korisnik.getTimeZoneDataList() != null) {
                 korisnik.getTimeZoneDataList().size();
             }
             
-            // OVO JE DODATA LINIJA ZA TVOJU NOVU GREŠKU:
             if (korisnik.getFollowedArtists() != null) {
                 korisnik.getFollowedArtists().size();
             }

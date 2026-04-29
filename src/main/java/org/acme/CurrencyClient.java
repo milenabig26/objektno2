@@ -7,12 +7,12 @@ import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 
-@RegisterRestClient(baseUri = "https://timeapi.io/api")
-public interface TimeServiceClient {
+@RegisterRestClient(baseUri = "https://api.euroratesapi.dev")
+public interface CurrencyClient {
 
     @GET
-    @Path("/Time/current/ip")
+    @Path("/api/rates")
     @Produces(MediaType.APPLICATION_JSON)
-
-    String getTimeByIp(@QueryParam("ipAddress") String ipAddress);
+   
+    String getRates(@QueryParam("from") String from, @QueryParam("to") String to);
 }
