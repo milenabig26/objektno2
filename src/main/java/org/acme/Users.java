@@ -25,19 +25,19 @@ public class Users {
     @Column(nullable = false)
     private String password;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "profile_id", referencedColumnName = "id")
     private UserProfile userProfile;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<TimeZoneData> timeZoneDataList = new ArrayList<>();
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<CurrencyResponse> currencyResponses = new ArrayList<>();
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "user_follows_artist",
         joinColumns = @JoinColumn(name = "user_id"), 
@@ -45,9 +45,18 @@ public class Users {
     )
     private List<Artist> followedArtists = new ArrayList<>();
 
+    @JsonManagedReference
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE}) // Promijenjeno na EAGER
+    @JoinTable(
+        name = "user_uploaded_files",
+        joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "file_id")
+    )
+    private List<UploadedFile> uploadedFiles = new ArrayList<>();
+  
+
     public Users() {}
 
-    
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -71,4 +80,7 @@ public class Users {
 
     public List<Artist> getFollowedArtists() { return followedArtists; }
     public void setFollowedArtists(List<Artist> followedArtists) { this.followedArtists = followedArtists; }
+
+    public List<UploadedFile> getUploadedFiles() { return uploadedFiles; }
+    public void setUploadedFiles(List<UploadedFile> uploadedFiles) { this.uploadedFiles = uploadedFiles; }
 }
